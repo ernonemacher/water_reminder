@@ -1,12 +1,10 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:waterreminder/components/app_background.dart';
 import 'package:waterreminder/components/info_card.dart';
 import 'package:waterreminder/config/config_cores.dart';
 import 'package:waterreminder/config/config_rotas.dart';
-import 'package:waterreminder/views/home.dart';
 
 class BoasVindas extends StatefulWidget {
   @override
