@@ -2,7 +2,7 @@ import 'package:waterreminder/views/boas_vindas.dart';
 import 'package:waterreminder/views/home.dart';
 
 class ConfigRotas {
-  static const String BOAS_VINDAS = "boasvindas";
+  static const String BOAS_VINDAS = "w";
   static const String HOME = "/home";
 
   static build() {

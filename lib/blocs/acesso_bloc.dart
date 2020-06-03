@@ -3,6 +3,7 @@ import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:waterreminder/blocs/usuario_bloc.dart';
 import 'package:waterreminder/config/config_rotas.dart';
+import 'package:waterreminder/model/usuario.dart';
 
 class AcessoBloc extends BlocBase {
   final _facebookLogin = FacebookLogin();
@@ -11,13 +12,15 @@ class AcessoBloc extends BlocBase {
   ValueStream<FacebookLoginStatus> get AcessoStream => AcessoController.stream;
 
   Future<String> validaAcesso() async {
-    return await Future.delayed(Duration(seconds: 1), () async {
+    return Future.delayed(Duration(seconds: 1), () async {
       print("antes");
       bool usuarioLogado = await _facebookLogin.isLoggedIn;
       print("durante");
       if (usuarioLogado) {
         print("depois");
+
         await _carregarUsuario();
+
         return ConfigRotas.HOME;
       } else {
         print("depois");
@@ -52,12 +55,14 @@ class AcessoBloc extends BlocBase {
   Future<void> _carregarUsuario() async {
     FacebookAccessToken tk = await _facebookLogin.currentAccessToken;
     final _usuarioBloc = BlocProvider.getBloc<UsuarioBloc>();
-    await _usuarioBloc.buscarDadosUsuarioFacebook(tk.token);
+    Usuario usuario = await _usuarioBloc.buscarDadosUsuarioFacebook(tk.token);
+    await _usuarioBloc.sincronizarUsuarioFirebase(usuario);
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
+    // TODO: implement dispos
+    AcessoController.close();
     super.dispose();
   }
 }
