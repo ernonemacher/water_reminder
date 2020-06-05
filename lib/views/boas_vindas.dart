@@ -5,6 +5,7 @@ import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:waterreminder/blocs/acesso_bloc.dart';
 import 'package:waterreminder/components/app_background.dart';
+import 'package:waterreminder/components/boasvindas_card.dart';
 import 'package:waterreminder/components/info_card.dart';
 import 'package:waterreminder/config/config_cores.dart';
 import 'package:waterreminder/config/config_rotas.dart';
@@ -41,10 +42,7 @@ class _BoasVindasState extends State<BoasVindas> {
                 ),
                 Text(
                   "Water Reminder",
-                  style: Theme
-                      .of(context)
-                      .textTheme
-                      .headline,
+                  style: Theme.of(context).textTheme.headline,
                   textAlign: TextAlign.center,
                 ),
                 InfoCard(
@@ -63,94 +61,58 @@ class _BoasVindasState extends State<BoasVindas> {
                 Padding(
                   padding: EdgeInsets.only(top: 16, left: 10, right: 10),
                   child: StreamBuilder<FacebookLoginStatus>(
-                    stream: _bloc.AcessoStream,
-                    builder: (context, snapshot) {
-                      return SizedBox(
-                        height: 60,
-                        child: RaisedButton(
-                          onPressed: onPressed,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Builder(builder: (context) {
-                            if (_isLoading) {
-                              return Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  Text(
-                                    // ignore: missing_return
-                                    "AGUARDE",
-                                    style: Theme
-                                        .of(context)
-                                        .textTheme
-                                        .title
-                                        .copyWith(color: ConfigCores.azulFacebook),
-                                  ),
-                                  Container(
+                      stream: _bloc.AcessoStream,
+                      builder: (context, snapshot) {
+                        return SizedBox(
+                          height: 60,
+                          child: RaisedButton(
+                            onPressed: onPressed,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Builder(builder: (context) {
+                              if (_isLoading) {
+                                return BoasVindas_Card(
+                                  text: "AGUARDE",
+                                  child: Container(
                                     padding: EdgeInsets.all(6),
                                     child: CircularProgressIndicator(
                                       strokeWidth: 1.5,
                                       valueColor: AlwaysStoppedAnimation(
                                           ConfigCores.azulFacebook),
                                     ),
-                                  )
-                                ],
-                              );
-                            }
-                            if(snapshot?.data == FacebookLoginStatus.loggedIn) {
-                              return Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  Text(
-                                    // ignore: missing_return
-                                    "Seja bem vindo!",
-                                    style: Theme
-                                        .of(context)
-                                        .textTheme
-                                        .title
-                                        .copyWith(color: ConfigCores.azulFacebook),
                                   ),
-                                  Container(
+                                );
+                              }
+                              if (snapshot?.data ==
+                                  FacebookLoginStatus.loggedIn) {
+                                return BoasVindas_Card(
+                                  text: "Seja bem vindo!",
+                                  child: Container(
                                     padding: EdgeInsets.all(6),
                                     child: Icon(
                                       MdiIcons.check,
                                       size: 50,
                                       color: ConfigCores.azulFacebook,
                                     ),
-                                  )
-                                ],
-                              );
-                            }
-                            return Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                Text(
-                                  // ignore: missing_return
-                                  "ACESSAR COM",
-                                  style: Theme
-                                      .of(context)
-                                      .textTheme
-                                      .title
-                                      .copyWith(color: ConfigCores.azulFacebook),
-                                ),
-                                Container(
+                                  ),
+                                );
+                              }
+                              return BoasVindas_Card(
+                                text: "ACESSAR COM",
+                                child: Container(
                                   padding: EdgeInsets.all(6),
                                   child: Icon(
                                     MdiIcons.facebook,
                                     size: 50,
                                     color: ConfigCores.azulFacebook,
                                   ),
-                                )
-                              ],
-                            );
-                          }),
-                        ),
-                      );
-                    }
-                  ),
+                                ),
+                              );
+                            }),
+                          ),
+                        );
+                      }),
                 )
               ],
             ),
@@ -161,7 +123,8 @@ class _BoasVindasState extends State<BoasVindas> {
   }
 
   void onPressed() async {
-    if (_isLoading || _bloc.AcessoStream.value == FacebookLoginStatus.loggedIn) {
+    if (_isLoading ||
+        _bloc.AcessoStream.value == FacebookLoginStatus.loggedIn) {
       return;
     }
 
@@ -176,10 +139,9 @@ class _BoasVindasState extends State<BoasVindas> {
     });
 
     if (result == FacebookLoginStatus.loggedIn) {
-      Future.delayed(Duration(milliseconds: 1500));
-          () {
+      Future.delayed(Duration(milliseconds: 1500), () {
         Navigator.of(context).pushReplacementNamed(ConfigRotas.HOME);
-      };
+      });
     }
   }
 }

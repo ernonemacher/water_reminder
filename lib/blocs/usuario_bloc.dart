@@ -76,7 +76,6 @@ class UsuarioBloc extends BlocBase {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     _usuarioContoller.close();
     super.dispose();
   }

@@ -1,34 +1,34 @@
 {
   "project_info": {
-    "project_number": "289114774454",
-    "firebase_url": "https://water-reminder-5b615.firebaseio.com",
-    "project_id": "water-reminder-5b615",
-    "storage_bucket": "water-reminder-5b615.appspot.com"
+    "project_number": "551954256209",
+    "firebase_url": "https://water-reminder-642ce.firebaseio.com",
+    "project_id": "water-reminder-642ce",
+    "storage_bucket": "water-reminder-642ce.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:289114774454:android:b297f45133b2ece61fbf17",
+        "mobilesdk_app_id": "1:551954256209:android:b8ea0e0ac7a18b688d8370",
         "android_client_info": {
           "package_name": "ernonemacher.waterreminder"
         }
       },
       "oauth_client": [
         {
-          "client_id": "289114774454-6pglapn9ck1cqt701eojkp0egkio061p.apps.googleusercontent.com",
+          "client_id": "551954256209-c8s01pmin31juledc6m8ubu8mgk3fntv.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBWDS4K6BOXc18um1Pm_Xgt2eTcptnWjYk"
+          "current_key": "AIzaSyATE_JGi54LDGx_clFYIPkKgdXuFEWKONg"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "289114774454-6pglapn9ck1cqt701eojkp0egkio061p.apps.googleusercontent.com",
+              "client_id": "551954256209-c8s01pmin31juledc6m8ubu8mgk3fntv.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

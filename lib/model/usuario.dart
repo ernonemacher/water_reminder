@@ -20,5 +20,6 @@ class Usuario {
     map["facebookId"] = this.facebookId;
     map["nome"] = this.nome;
     map["urlFoto"] = this.urlFoto;
+    return map;
   }
 }
