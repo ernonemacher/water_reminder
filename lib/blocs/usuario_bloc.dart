@@ -63,7 +63,7 @@ class UsuarioBloc extends BlocBase {
 
   Future<Usuario> sincronizarUsuarioFirebase(Usuario usuario) async {
     Usuario usuarioExistente =
-        await buscarDadosUsuarioFacebook(usuario.facebookId);
+        await buscarUsuarioId(usuario.facebookId);
 
     if (usuarioExistente == null) {
       return await insereUsuario(usuario);

@@ -1,7 +1,7 @@
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_splash/flutter_splash.dart';
 import 'package:waterreminder/blocs/acesso_bloc.dart';
+import 'package:waterreminder/components/splash.dart';
 import 'package:waterreminder/config/config_cores.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -26,7 +26,7 @@ class _SplashScreenState extends State<SplashScreen> {
             ),
       ),
       loaderColor: ConfigCores.azulClaro,
-      navigateAfterFuture: _bloc.validaAcesso(),
+      navigateAfterFuture: _bloc.validaAcesso,
     );
   }
 }
