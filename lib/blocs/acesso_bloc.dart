@@ -52,6 +52,11 @@ class AcessoBloc extends BlocBase {
     return result.status;
   }
 
+  Future<void> logout() async {
+    await _facebookLogin.logOut();
+    AcessoController.sink.add(FacebookLoginStatus.cancelledByUser);
+  }
+
   Future<void> _carregarUsuario() async {
     FacebookAccessToken tk = await _facebookLogin.currentAccessToken;
     final _usuarioBloc = BlocProvider.getBloc<UsuarioBloc>();
