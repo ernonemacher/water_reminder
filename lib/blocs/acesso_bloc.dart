@@ -1,6 +1,7 @@
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:waterreminder/blocs/preferencias_bloc.dart';
 import 'package:waterreminder/blocs/usuario_bloc.dart';
 import 'package:waterreminder/config/config_rotas.dart';
 import 'package:waterreminder/model/usuario.dart';
@@ -61,6 +62,13 @@ class AcessoBloc extends BlocBase {
     FacebookAccessToken tk = await _facebookLogin.currentAccessToken;
     final _usuarioBloc = BlocProvider.getBloc<UsuarioBloc>();
     Usuario usuario = await _usuarioBloc.buscarDadosUsuarioFacebook(tk.token);
+
+    final usuarioFirebase = await  _usuarioBloc.sincronizarUsuarioFirebase(usuario);
+
+    if(usuarioFirebase.key != null) {
+      final  _preferenciasBloc  =  BlocProvider.getBloc<PreferenciasBloc>();
+      await _preferenciasBloc.sincronizarPreferencias(usuarioFirebase.key);
+    }
     await _usuarioBloc.sincronizarUsuarioFirebase(usuario);
   }
 

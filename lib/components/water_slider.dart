@@ -1,16 +1,18 @@
+import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:waterreminder/components/water_icon.dart';
 import 'package:waterreminder/config/config_cores.dart';
 
 class WaterSlider extends StatefulWidget {
+  final int value;
   final int min;
   final int max;
   final int divisions;
   final Function onChanged;
 
   WaterSlider(
-      {@required this.min,
+      {this.value,
+      @required this.min,
       @required this.max,
       @required this.divisions,
       @required this.onChanged});
@@ -26,7 +28,7 @@ class _WaterSliderState extends State<WaterSlider> {
   void initState() {
     super.initState();
 
-    value = widget.min;
+    value = widget.value ?? widget.min;
   }
 
   @override
@@ -57,12 +59,18 @@ class _WaterSliderState extends State<WaterSlider> {
             onChanged: (vl) {
               setState(() {
                 this.value = vl.toInt();
-                widget.onChanged(vl.toInt());
               });
+              EasyDebounce.debounce("onChangeSlider",
+                  Duration(milliseconds: 500), _callOnChanged);
             },
           ),
         ),
       ],
     );
+  }
+
+  void _callOnChanged() {
+    print("VALOR ALTERADO $value");
+    widget.onChanged(value);
   }
 }
