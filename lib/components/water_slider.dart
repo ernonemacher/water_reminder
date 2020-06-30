@@ -32,6 +32,16 @@ class _WaterSliderState extends State<WaterSlider> {
   }
 
   @override
+  void didUpdateWidget(WaterSlider oldWidget) {
+    if (oldWidget.value != this.widget.value) {
+      setState(() {
+        value = widget.value;
+      });
+    }
+    super.didUpdateWidget(oldWidget);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[

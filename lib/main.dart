@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:waterreminder/blocs/acesso_bloc.dart';
+import 'package:waterreminder/blocs/consumo_diario_bloc.dart';
+import 'package:waterreminder/blocs/historico_bloc.dart';
+import 'package:waterreminder/blocs/notification_bloc.dart';
 import 'package:waterreminder/blocs/preferencias_bloc.dart';
 import 'package:waterreminder/blocs/usuario_bloc.dart';
 import 'package:waterreminder/config/config_rotas.dart';
@@ -24,6 +27,9 @@ class MyApp extends StatelessWidget {
         Bloc((i) => AcessoBloc()),
         Bloc((i) => UsuarioBloc()),
         Bloc((i) => PreferenciasBloc()),
+        Bloc((i) => ConsumoDiarioBloc()),
+        Bloc((i) => HistoricoBloc()),
+        Bloc((i) => NotificationBloc()),
       ],
       child: MaterialApp(
         title: 'Water Reminder',

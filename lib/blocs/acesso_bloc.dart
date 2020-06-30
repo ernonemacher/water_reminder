@@ -1,10 +1,14 @@
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:waterreminder/blocs/consumo_diario_bloc.dart';
 import 'package:waterreminder/blocs/preferencias_bloc.dart';
 import 'package:waterreminder/blocs/usuario_bloc.dart';
+import 'package:waterreminder/blocs/notification_bloc.dart';
 import 'package:waterreminder/config/config_rotas.dart';
 import 'package:waterreminder/model/usuario.dart';
+
+import 'historico_bloc.dart';
 
 class AcessoBloc extends BlocBase {
   final _facebookLogin = FacebookLogin();
@@ -56,6 +60,9 @@ class AcessoBloc extends BlocBase {
   Future<void> logout() async {
     await _facebookLogin.logOut();
     AcessoController.sink.add(FacebookLoginStatus.cancelledByUser);
+
+    final _notificacaoBloc =  BlocProvider.getBloc<NotificationBloc>();
+    await _notificacaoBloc.cancelAll();
   }
 
   Future<void> _carregarUsuario() async {
@@ -68,13 +75,27 @@ class AcessoBloc extends BlocBase {
     if(usuarioFirebase.key != null) {
       final  _preferenciasBloc  =  BlocProvider.getBloc<PreferenciasBloc>();
       await _preferenciasBloc.sincronizarPreferencias(usuarioFirebase.key);
-    }
+    
     await _usuarioBloc.sincronizarUsuarioFirebase(usuario);
+
+    final  _consumoDiarioBloc  =  BlocProvider.getBloc<ConsumoDiarioBloc>();
+    await _consumoDiarioBloc.carregarConsumo();
+
+    final  _historicoBloc  =  BlocProvider.getBloc<HistoricoBloc>();
+    await _historicoBloc.carregarHistorico();
+
+    final _notificacaoBloc =  BlocProvider.getBloc<NotificationBloc>();
+    await _notificacaoBloc.init();
+
+    //Só mostra mensagem quando usuario recebe lembretes...
+    if(_preferenciasBloc.preferenciasStream.value.recebeLembretes) {
+      await _notificacaoBloc.subscribe();
+    }
+    }
   }
 
   @override
   void dispose() {
-    // TODO: implement dispos
     AcessoController.close();
     super.dispose();
   }
