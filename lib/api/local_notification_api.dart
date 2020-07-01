@@ -41,7 +41,7 @@ class LocalNotificationApi {
 
     final pendentes = await _notificationPlugin.pendingNotificationRequests();
 
-    for (int i = 0; i < 0; i++) {
+    for (int i = 0; i < 7; i++) {
       // Configura notificações do dia
       await _setupDay(
         date,
@@ -120,7 +120,7 @@ class LocalNotificationApi {
       priority: Priority.High,
       ticker: "ticker",
       color: ConfigCores.azulEscuro,
-      enableLights: true,
+      enableLights: false,
       enableVibration: true,
       ledOnMs: 1000,
       ledOffMs: 1000,
